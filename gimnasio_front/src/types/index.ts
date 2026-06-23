@@ -1,0 +1,436 @@
+export interface Usuario {
+  id: number
+  nombre: string
+  email: string
+  telefono?: string | null
+  activo: boolean
+  es_admin: boolean
+  rol: string
+  created_at: string
+}
+
+export interface UsuarioAdmin extends Usuario {
+  estudiante_id?: number | null
+  instructor_id?: number | null
+  rol_efectivo: string
+}
+
+export interface ResetPasswordResult {
+  mensaje: string
+  password_temporal?: string | null
+  enviado_email?: boolean
+  enviado_sms?: boolean
+}
+
+export interface TokenResponse {
+  access_token: string
+  refresh_token: string
+  token_type: string
+}
+
+export type UserRol = 'admin' | 'recepcion' | 'instructor' | 'estudiante'
+
+export interface PerfilResponse {
+  usuario: Usuario
+  rol: UserRol
+  estudiante_id?: number | null
+  instructor_id?: number | null
+}
+
+export interface InstructorPanel {
+  instructor_id: number
+  nombre: string
+  especialidades?: string[]
+  rutinas_asignadas: number
+  actividades_a_cargo: number
+  reservas_activas: number
+}
+
+export interface DashboardKpis {
+  total_estudiantes: number
+  estudiantes_activos: number
+  accesos_hoy: number
+  membresias_por_vencer: number
+  fecha: string
+  en_gimnasio_ahora?: number
+  alertas_activas?: number
+  total_registrados?: number
+  ingresos_hoy?: number
+  salidas_hoy?: number
+  ingresos_mes?: number
+}
+
+export interface ReporteAccesos {
+  fecha_inicio: string
+  fecha_fin: string
+  total_escaneos: number
+  accesos_concedidos: number
+  accesos_denegados: number
+  tasa_denegacion_pct: number
+}
+
+export interface Estudiante {
+  id: number
+  usuario_id: number
+  nombre: string
+  email: string
+  telefono?: string | null
+  cs?: string | null
+  registro_univercotario?: string | null
+  carrera?: string | null
+  fotourl?: string | null
+  fechainicio_membresia?: string | null
+  fechafin_membresia?: string | null
+  nfc_uid?: string | null
+  codigo_acceso?: string | null
+  created_at: string
+}
+
+export interface Instructor {
+  id: number
+  usuario_id: number
+  nombre: string
+  email?: string | null
+  telefono?: string | null
+  especialidades?: string[]
+  fotourl?: string | null
+  created_at: string
+}
+
+export interface Ejercicio {
+  id: number
+  nombre: string
+  descripcion?: string | null
+  grupo_muscular?: string | null
+  objetivo?: string | null
+  con_maquina: boolean
+  maquina_id?: number | null
+  maquina_nombre?: string | null
+  fotourl?: string | null
+  videourl?: string | null
+  created_at: string
+}
+
+export interface RutinaEjercicioDetalle {
+  ejercicio_id: number
+  nombre: string
+  con_maquina: boolean
+  maquina_nombre?: string | null
+  grupo_muscular?: string | null
+  series?: number | null
+  repeticiones?: string | null
+}
+
+export interface Actividad {
+  id: number
+  instructor_id?: number | null
+  instructor_nombre?: string | null
+  sala_id?: number | null
+  sala_nombre?: string | null
+  nombre: string
+  descripcion?: string | null
+  dia_semana?: string | null
+  dias_semana?: string[]
+  hora_inicio?: string | null
+  hora_fin?: string | null
+  capacidad: number
+  vigencia_tipo?: string
+  vigencia_inicio?: string | null
+  vigencia_fin?: string | null
+  vigencia_label?: string | null
+  cupos_ocupados?: number | null
+  cupos_disponibles?: number | null
+  created_at: string
+}
+
+export interface Sala {
+  id: number
+  nombre: string
+  tipo: 'actividad' | 'maquinas'
+  capacidad: number
+  activa: boolean
+  created_at: string
+}
+
+export interface TurnoCoach {
+  id: string
+  nombre: string
+  hora_inicio: string
+  hora_fin: string
+}
+
+export interface ConfigGym {
+  hora_apertura: string
+  hora_cierre: string
+  bloques: string[]
+  turnos_coach: TurnoCoach[]
+  capacidad_actividad: number
+  capacidad_maquinas: number
+  min_coaches_manana: number
+  min_coaches_tarde: number
+  min_entrenadores_actividad: number
+}
+
+export interface AsignacionInstructor {
+  id: number
+  instructor_id: number
+  instructor_nombre?: string | null
+  sala_id: number
+  sala_nombre?: string | null
+  fecha?: string | null
+  turno?: string | null
+  hora_inicio: string
+  hora_fin: string
+  tipo: string
+  vigencia_tipo?: string
+  vigencia_inicio?: string | null
+  vigencia_fin?: string | null
+  vigencia_label?: string | null
+  actividad_id?: number | null
+  created_at: string
+}
+
+export interface StaffingResumen {
+  fecha: string
+  coaches_manana: number
+  coaches_tarde: number
+  coaches_manana_requeridos: number
+  coaches_tarde_requeridos: number
+  entrenadores_actividad: number
+  entrenadores_actividad_requeridos: number
+  actividades_programadas: number
+  alertas: string[]
+  staffing_ok: boolean
+}
+
+export interface DisponibilidadBloque {
+  fecha: string
+  dia_semana?: string | null
+  hora_inicio: string
+  hora_fin: string
+  sala_id: number
+  sala_nombre: string
+  sala_tipo: string
+  capacidad: number
+  disponible: boolean
+  motivo_ocupacion?: string | null
+}
+
+export interface DisponibilidadSemanalCelda {
+  dia_semana: string
+  hora_inicio: string
+  hora_fin: string
+  sala_id: number
+  sala_nombre: string
+  disponible: boolean
+  motivo_ocupacion?: string | null
+  actividad_nombre?: string | null
+}
+
+export interface DisponibilidadSemanal {
+  referencia?: string
+  dias: string[]
+  bloques: string[]
+  salas: { id: number; nombre: string; etiqueta: string }[]
+  celdas: DisponibilidadSemanalCelda[]
+}
+
+export interface Pago {
+  id: number
+  estudiante_id: number
+  estudiante_nombre?: string | null
+  membresia_id?: number | null
+  monto: string
+  metodo: string
+  referencia?: string | null
+  fecha: string
+  notas?: string | null
+  created_at: string
+}
+
+export interface Maquina {
+  id: number
+  instructor_id?: number | null
+  codigo?: string | null
+  nombre: string
+  descripcion?: string | null
+  categoria?: string | null
+  marca?: string | null
+  ubicacion?: string | null
+  fotourl?: string | null
+  estado_maquina: string
+  anios_vida_util?: number | null
+  fecha_adquisicion?: string | null
+  created_at: string
+}
+
+export interface MantenimientoChecklistItem {
+  id: string
+  texto: string
+  completado: boolean
+}
+
+export interface MantenimientoChecklistSeccion {
+  titulo: string
+  items: MantenimientoChecklistItem[]
+}
+
+export interface MantenimientoPlantilla {
+  tipos: { value: string; label: string }[]
+  secciones: MantenimientoChecklistSeccion[]
+}
+
+export interface MantenimientoMaquina {
+  id: number
+  maquina_id: number
+  maquina_codigo?: string | null
+  maquina_nombre?: string | null
+  tipo: string
+  responsable?: string | null
+  observaciones?: string | null
+  checklist: MantenimientoChecklistSeccion[]
+  fecha_realizado: string
+  proximo_mantenimiento?: string | null
+  resultado: string
+  created_at: string
+}
+
+export interface Acceso {
+  id: number
+  estudiante_id?: number | null
+  fecha: string
+  hora_entrada?: number | null
+  hora_salida?: number | null
+  tiempo_permanencia?: string | null
+  acceso_concedido: boolean
+  motivo_denegacion?: string | null
+  created_at: string
+  estudiante_nombre?: string | null
+  estudiante_carrera?: string | null
+  registro_universitario?: string | null
+  tipo_movimiento?: 'entrada' | 'salida' | 'denegado' | null
+  hora_display?: string | null
+}
+
+export interface CodigoAcceso {
+  codigo: string
+  qr_payload: string
+  nombre: string
+}
+
+export interface NfcScanResult {
+  acceso_concedido: boolean
+  estudiante_id?: number | null
+  nombre?: string | null
+  carrera?: string | null
+  registro_universitario?: string | null
+  estado_membresia?: string | null
+  acceso_id?: number | null
+  motivo_denegacion?: string | null
+  tipo_movimiento?: 'entrada' | 'salida' | 'denegado' | null
+  mensaje: string
+}
+
+export interface AccesoMonitorStats {
+  en_gimnasio_ahora: number
+  ingresos_hoy: number
+  salidas_hoy: number
+  denegados_hoy: number
+  alertas_activas: number
+  total_registrados: number
+  estudiantes_hoy: number
+  ultimo_escaneo?: string | null
+  tarjetas_leidas_hoy: number
+  errores_hoy: number
+  lector_activo: boolean
+}
+
+export interface AlertaSeguridad {
+  id: number
+  mensaje: string
+  tipo: string
+  hora: string
+  detalle?: string | null
+}
+
+export interface Notificacion {
+  id: number
+  estudiante_id: number
+  fecha?: string | null
+  titulo: string
+  mensaje: string
+  leida: boolean
+  tipo?: string | null
+  created_at: string
+}
+
+export interface Reserva {
+  id: number
+  estudiante_id: number
+  estudiante_nombre?: string | null
+  actividad_id: number
+  actividad_nombre?: string | null
+  horario?: string | null
+  fecha: string
+  estado: number
+  created_at: string
+}
+
+export interface Inscripcion {
+  id: number
+  estudiante_id: number
+  estudiante_nombre?: string | null
+  tipo: 'actividad' | 'sala_maquinas' | string
+  actividad_id?: number | null
+  actividad_nombre?: string | null
+  mes_inicio: string
+  mes_label?: string | null
+  monto: string
+  referencia_pago: string
+  qr_pago: string
+  estado: number
+  estado_label?: string | null
+  pago_id?: number | null
+  pago_expira_en?: string | null
+  qr_vigente?: boolean
+  creado_por_admin: boolean
+  created_at: string
+}
+
+export interface VentanaInscripcion {
+  hoy: string
+  mes_objetivo: string
+  ventana_inicio: string
+  ventana_fin: string
+  ventana_abierta: boolean
+  dias_ventana: number
+  precio_actividad: string
+  precio_sala_maquinas: string
+}
+
+export interface Rutina {
+  id: number
+  instructor_id?: number | null
+  instructor_nombre?: string | null
+  estudiante_id?: number | null
+  estudiante_nombre?: string | null
+  plantilla_id?: number | null
+  es_plantilla?: boolean
+  nombre: string
+  objetivo?: string | null
+  notas_asignacion?: string | null
+  ejercicios?: RutinaEjercicioDetalle[]
+  created_at: string
+}
+
+export interface Membresia {
+  id: number
+  estudiante_id: number
+  estudiante_nombre?: string | null
+  tipo: string
+  precio: string
+  duracion: number
+  fecha_inicio?: string | null
+  fecha_fin?: string | null
+  created_at: string
+}
