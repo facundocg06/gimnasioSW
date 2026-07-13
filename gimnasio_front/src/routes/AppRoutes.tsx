@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
 import { Layout } from '../components/Layout'
 
@@ -40,6 +40,8 @@ import { NotificacionesPage } from '../pages/admin/NotificacionesPage'
 import { ReportesPage } from '../pages/admin/ReportesPage'
 
 import { UsuariosPage } from '../pages/admin/UsuariosPage'
+import { RolesPage } from '../pages/admin/RolesPage'
+import { ConfiguracionPage } from '../pages/admin/ConfiguracionPage'
 
 import { InstructorActividadesPage } from '../pages/instructor/InstructorActividadesPage'
 
@@ -62,6 +64,8 @@ import { StudentReservasPage } from '../pages/student/StudentReservasPage'
 
 import { StudentRutinasPage } from '../pages/student/StudentRutinasPage'
 import { StudentAccesoPage } from '../pages/student/StudentAccesoPage'
+import { StudentFichaInscripcionPage } from '../pages/student/StudentFichaInscripcionPage'
+import { FichasInscripcionPage } from '../pages/admin/FichasInscripcionPage'
 
 const STAFF_ROLES: UserRol[] = ['admin', 'recepcion']
 
@@ -126,6 +130,7 @@ export function AppRoutes() {
       >
         <Route index element={<DashboardPage />} />
         <Route path="estudiantes" element={<EstudiantesPage />} />
+        <Route path="fichas-inscripcion" element={<FichasInscripcionPage />} />
         <Route path="acceso" element={<AccesoPage />} />
         <Route path="reservas" element={<ReservasAdminPage />} />
         <Route path="membresias" element={<MembresiasPage />} />
@@ -135,10 +140,13 @@ export function AppRoutes() {
           path="usuarios"
           element={
             <AdminOnly>
-              <UsuariosPage />
+              <Outlet />
             </AdminOnly>
           }
-        />
+        >
+          <Route index element={<UsuariosPage />} />
+          <Route path="roles" element={<RolesPage />} />
+        </Route>
         <Route
           path="instructores"
           element={
@@ -203,6 +211,15 @@ export function AppRoutes() {
             </AdminOnly>
           }
         />
+        <Route path="mis-avisos" element={<StudentNotificacionesPage />} />
+        <Route
+          path="configuracion"
+          element={
+            <AdminOnly>
+              <ConfiguracionPage />
+            </AdminOnly>
+          }
+        />
       </Route>
 
       <Route
@@ -218,6 +235,7 @@ export function AppRoutes() {
         <Route path="actividades" element={<InstructorActividadesPage />} />
         <Route path="horarios" element={<InstructorHorariosPage />} />
         <Route path="reservas" element={<InstructorReservasPage />} />
+        <Route path="notificaciones" element={<StudentNotificacionesPage />} />
       </Route>
 
       <Route
@@ -230,6 +248,7 @@ export function AppRoutes() {
       >
         <Route index element={<StudentHomePage />} />
         <Route path="acceso" element={<StudentAccesoPage />} />
+        <Route path="ficha-inscripcion" element={<StudentFichaInscripcionPage />} />
         <Route path="reservas" element={<StudentReservasPage />} />
         <Route path="notificaciones" element={<StudentNotificacionesPage />} />
         <Route path="actividades" element={<StudentActividadesPage />} />

@@ -28,12 +28,12 @@ import { formatDias } from '@/lib/diasSemana'
 type ModalMode = 'create' | 'edit' | 'view' | null
 
 const ESPECIALIDAD_STYLES = [
-  'bg-red-500/15 text-red-400 border-red-500/30',
-  'bg-cyan-500/15 text-cyan-400 border-cyan-500/30',
-  'bg-amber-500/15 text-amber-400 border-amber-500/30',
-  'bg-violet-500/15 text-violet-400 border-violet-500/30',
-  'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-  'bg-orange-500/15 text-orange-400 border-orange-500/30',
+  'bg-red-500/15 text-red-700 border-red-500/40 dark:text-red-400 dark:border-red-500/30',
+  'bg-cyan-500/15 text-cyan-800 border-cyan-500/40 dark:text-cyan-400 dark:border-cyan-500/30',
+  'bg-amber-500/15 text-amber-900 border-amber-500/40 dark:text-amber-400 dark:border-amber-500/30',
+  'bg-violet-500/15 text-violet-800 border-violet-500/40 dark:text-violet-400 dark:border-violet-500/30',
+  'bg-emerald-500/15 text-emerald-800 border-emerald-500/40 dark:text-emerald-400 dark:border-emerald-500/30',
+  'bg-orange-500/15 text-orange-800 border-orange-500/40 dark:text-orange-400 dark:border-orange-500/30',
 ]
 
 function especialidadStyle(especialidad: string) {
@@ -261,9 +261,7 @@ export function InstructoresPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Entrenadores</h1>
-          <p className="text-muted-foreground">
-            Gestión de entrenadores, horarios y asignaciones de estudiantes
-          </p>
+          
         </div>
         <Button onClick={openCreate}>
           <Plus className="mr-2 h-4 w-4" />
